@@ -1089,3 +1089,120 @@ const today =
     new Date().toISOString().split("T")[0];
 
 document.getElementById("journeyDate").min = today;
+
+
+// ── Navbar enhancements ──────────────────────────────────────
+
+(function () {
+
+  // Scroll progress bar
+  const progress = document.getElementById("navProgress");
+  const header   = document.getElementById("mainHeader");
+
+  function updateScrollUI() {
+    const scrolled = window.scrollY;
+    const total    = document.documentElement.scrollHeight - window.innerHeight;
+    if (progress && total > 0) {
+      progress.style.width = (scrolled / total * 100).toFixed(2) + "%";
+    }
+    if (header) {
+      header.classList.toggle("scrolled", scrolled > 10);
+    }
+    // Active nav link based on scroll position
+    const homeEl    = document.getElementById("home");
+    const bookingEl = document.getElementById("booking");
+    const navHome   = document.getElementById("navHome");
+    const navBook   = document.getElementById("navBook");
+    if (!navHome || !navBook) return;
+    if (bookingEl && scrolled + 120 >= bookingEl.offsetTop) {
+      navHome.classList.remove("active");
+      navBook.classList.add("active");
+    } else {
+      navHome.classList.add("active");
+      navBook.classList.remove("active");
+    }
+  }
+
+  window.addEventListener("scroll", updateScrollUI, { passive: true });
+  updateScrollUI();
+
+  // Hamburger menu
+  const hamBtn    = document.getElementById("hamBtn");
+  const mobileNav = document.getElementById("mobileNav");
+
+  function openMobileNav() {
+    mobileNav.classList.add("open");
+    mobileNav.setAttribute("aria-hidden", "false");
+    hamBtn.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeMobileNav() {
+    mobileNav.classList.remove("open");
+    mobileNav.setAttribute("aria-hidden", "true");
+    hamBtn.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+  }
+
+  if (hamBtn && mobileNav) {
+    hamBtn.addEventListener("click", function () {
+      const isOpen = mobileNav.classList.contains("open");
+      isOpen ? closeMobileNav() : openMobileNav();
+    });
+
+    // Close drawer when a link inside is clicked
+    mobileNav.querySelectorAll("a, button").forEach(function (el) {
+      el.addEventListener("click", function () {
+        // Don't close for theme toggle – it stays in place
+        if (el.id !== "mobileThemeToggle") {
+          closeMobileNav();
+        }
+      });
+    });
+
+    // Close on ESC
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeMobileNav();
+    });
+  }
+
+  // Wire mobile nav buttons to their desktop counterparts
+  var mobileHistoryOpen = document.getElementById("mobileHistoryOpen");
+  var mobileLoginOpen   = document.getElementById("mobileLoginOpen");
+  var mobileThemeTgl    = document.getElementById("mobileThemeToggle");
+  var desktopHistory    = document.getElementById("historyOpen");
+  var desktopLogin      = document.getElementById("loginOpen");
+  var desktopTheme      = document.getElementById("themeToggle");
+
+  if (mobileHistoryOpen && desktopHistory) {
+    mobileHistoryOpen.addEventListener("click", function () { desktopHistory.click(); });
+  }
+  if (mobileLoginOpen && desktopLogin) {
+    mobileLoginOpen.addEventListener("click", function () { desktopLogin.click(); });
+  }
+  if (mobileThemeTgl && desktopTheme) {
+    mobileThemeTgl.addEventListener("click", function () { desktopTheme.click(); });
+  }
+
+  // Bookings badge – show count when bookings exist
+  function refreshBadge() {
+    var badge = document.getElementById("bookingsBadge");
+    if (!badge) return;
+    try {
+      var bookings = JSON.parse(localStorage.getItem("st_bookings") || "[]");
+      var active   = bookings.filter(function (b) { return b.status !== "cancelled"; });
+      if (active.length > 0) {
+        badge.textContent = active.length;
+        badge.hidden = false;
+      } else {
+        badge.hidden = true;
+      }
+    } catch (e) {
+      badge.hidden = true;
+    }
+  }
+
+  refreshBadge();
+  window.addEventListener("st_bookings_changed", refreshBadge);
+
+}());
