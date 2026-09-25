@@ -1,0 +1,402 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #f4f7fb;
+    color: #222;
+}
+
+/* Header */
+
+header {
+    background: #0b3d91;
+    color: white;
+    padding: 15px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+nav button {
+    background: white;
+    color: #0b3d91;
+    border: none;
+    padding: 9px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Hero */
+
+.hero {
+    min-height: 500px;
+    background: linear-gradient(135deg, #0b3d91, #1976d2);
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 50px 8%;
+}
+
+.hero h1 {
+    font-size: 45px;
+    max-width: 700px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+.main-btn,
+.location-btn {
+    border: none;
+    padding: 13px 25px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.main-btn {
+    background: white;
+    color: #0b3d91;
+}
+
+.location-btn {
+    background: #ffca28;
+    color: #222;
+}
+
+#locationStatus {
+    margin-top: 20px;
+}
+
+/* Suggestions */
+
+.suggestion-section {
+    padding: 50px 8%;
+    text-align: center;
+}
+
+.suggestions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+.suggestion-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px #ccc;
+    min-width: 200px;
+}
+
+/* Booking */
+
+.booking-section {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px #ddd;
+}
+
+.booking-section h2,
+.payment-section h2,
+.confirmation h2,
+.contact h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.transport-types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.transport-types button {
+    flex: 1;
+    min-width: 150px;
+    padding: 13px;
+    border: 1px solid #0b3d91;
+    background: white;
+    color: #0b3d91;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.transport-types button:hover {
+    background: #0b3d91;
+    color: white;
+}
+
+/* Form */
+
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.route {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.fare-btn,
+.book-btn {
+    width: 100%;
+    border: none;
+    padding: 14px;
+    margin-top: 20px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.fare-btn {
+    background: #e3f2fd;
+    color: #0b3d91;
+}
+
+.book-btn {
+    background: #0b3d91;
+    color: white;
+}
+
+.fare-box {
+    margin-top: 20px;
+    background: #e8f5e9;
+    padding: 20px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+/* Payment */
+
+.payment-section {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px #ddd;
+}
+
+.payment-options {
+    display: flex;
+    gap: 15px;
+}
+
+.payment-options button {
+    flex: 1;
+    padding: 15px;
+    border: 1px solid #0b3d91;
+    background: white;
+    color: #0b3d91;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.payment-options button:hover {
+    background: #0b3d91;
+    color: white;
+}
+
+#paymentForm {
+    margin-top: 25px;
+}
+
+.pay-now {
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    border: none;
+    background: #2e7d32;
+    color: white;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+/* Confirmation */
+
+.confirmation {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 30px;
+    background: white;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px #ddd;
+}
+
+.confirmation button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    background: #0b3d91;
+    color: white;
+    border: none;
+    border-radius: 6px;
+}
+
+#bookingDetails {
+    line-height: 2;
+}
+
+/* Contact */
+
+.contact {
+    background: #0b3d91;
+    color: white;
+    padding: 50px;
+    text-align: center;
+}
+
+.contact p {
+    margin: 10px;
+}
+
+/* Footer */
+
+footer {
+    background: #06275c;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Modal */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+}
+
+.modal-content input {
+    margin: 8px 0;
+}
+
+.modal-content button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: #0b3d91;
+    color: white;
+    border: none;
+    border-radius: 6px;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+/* Utility */
+
+.hidden {
+    display: none;
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .route {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .payment-options {
+        flex-direction: column;
+    }
+
+    .booking-section,
+    .payment-section {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .hero {
+        min-height: 450px;
+        padding: 30px;
+    }
+}

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Public Transport Booking Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">🚆 SmartTransport</div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#booking">Book Now</a>
+        <button onclick="openLogin()">Login / Signup</button>
+    </nav>
+</header>
+
+<section id="home" class="hero">
+    <div>
+        <h1>Smart Public Transport Booking Portal</h1>
+        <p>“Smart Travel Starts Here.”
+        <br>
+           “One Portal, Every Public Transport.”</p>
+
+        <button class="main-btn" onclick="scrollToBooking()">Book Now</button>
+        <button class="location-btn" onclick="getLocation()">📍 Use My Location</button>
+
+        <p id="locationStatus"></p>
+    </div>
+</section>
+
+<section class="suggestion-section">
+    <h2>Transport Suggestions</h2>
+    <div id="transportSuggestions" class="suggestions">
+        <div class="suggestion-card">📍 Allow location access to get suggestions.</div>
+    </div>
+</section>
+
+<section id="booking" class="booking-section">
+    <h2>Book Your Journey</h2>
+
+    <div class="transport-types">
+
+        <button onclick="selectTransport('local')">🚆 Mumbai Local</button>
+        <button onclick="selectTransport('bus')">🚌 Public Bus</button>
+        <button onclick="selectTransport('express')">🚄 Express Train</button>
+        <button onclick="selectTransport('metro')">🚇 Mumbai Metro</button>
+        <button onclick="selectTransport('flight')">✈️ Domestic Flight</button>
+
+    </div>
+
+    <form id="bookingForm">
+
+        <label>Transport Type</label>
+        <select id="transportType" onchange="updateStations()">
+            <option value="">Select Transport</option>
+            <option value="local">Mumbai Local Train</option>
+            <option value="bus">Public Bus</option>
+            <option value="express">Indian Express Train</option>
+            <option value="metro">Mumbai Metro</option>
+            <option value="flight">Indian Domestic Flight</option>
+        </select>
+
+        <div class="route">
+
+            <div>
+                <label>Source</label>
+                <input
+                    type="text"
+                    id="source"
+                    list="sourceList"
+                    placeholder="Enter source"
+                    required
+                >
+
+                <datalist id="sourceList"></datalist>
+            </div>
+
+            <div>
+                <label>Destination</label>
+                <input
+                    type="text"
+                    id="destination"
+                    list="destinationList"
+                    placeholder="Enter destination"
+                    required
+                >
+
+                <datalist id="destinationList"></datalist>
+            </div>
+
+        </div>
+
+        <label>Date of Journey</label>
+        <input type="date" id="journeyDate" required>
+
+        <label>Number of Passengers</label>
+        <input type="number" id="passengers" min="1" max="10" value="1" required>
+
+        <button type="button" class="fare-btn" onclick="calculateFare()">
+            Calculate Fare
+        </button>
+
+        <div id="fareBox" class="fare-box">
+            Total Fare: ₹0
+        </div>
+
+        <button type="button" class="book-btn" onclick="showPayment()">
+            Continue to Payment
+        </button>
+
+    </form>
+</section>
+
+
+<!-- Payment Section -->
+
+<section id="paymentSection" class="payment-section hidden">
+
+    <h2>Payment Options</h2>
+
+    <div class="payment-options">
+
+        <button onclick="selectPayment('online')">
+            🌐 Online Payment
+        </button>
+
+        <button onclick="selectPayment('card')">
+            💳 Debit Card
+        </button>
+
+        <button onclick="selectPayment('qr')">
+            📱 QR Code
+        </button>
+
+    </div>
+
+    <div id="paymentForm"></div>
+
+</section>
+
+
+
+        <input type="password" placeholder="Password">
+
+        <button onclick="loginUser()">Continue</button>
+
+        <p id="loginMessage"></p>
+
+    </div>
+
+</div>
+
+
+<!-- Contact -->
+
+<section id="contact" class="contact">
+
+    <h2>Contact Us</h2>
+
+    <p>📧 Email: support@smarttransport.com</p>
+    <p>📞 Phone: +91 98765 43210</p>
+    <p>📍 Mumbai, Maharashtra, India</p>
+
+</section>
+
+
+<footer>
+    <p>© 2026 Smart Public Transport Booking Portal</p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
