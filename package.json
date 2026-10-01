@@ -1,0 +1,9 @@
+{
+  "name": "smarttransport",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SmartTransport demo with a file-backed Node.js backend",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

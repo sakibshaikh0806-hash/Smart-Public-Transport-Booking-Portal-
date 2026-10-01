@@ -402,8 +402,37 @@
       const element = (tag, options={}) => { const node=document.createElement(tag); if(options.className)node.className=options.className; if(options.text!==undefined)node.textContent=options.text; if(options.attrs)Object.entries(options.attrs).forEach(([k,v])=>node.setAttribute(k,v)); return node; };
       /** Generate a small accessible toast rather than using native alerts. */
       const toast = (message,type="info",title="SmartTransport") => { const box=element("div",{className:"toast "+type,attrs:{role:type==="error"?"alert":"status"}}); const icon=element("span",{text:type==="success"?"✓":type==="error"?"!":"i",attrs:{"aria-hidden":"true"}}); const copy=element("div"); copy.append(element("strong",{text:title}),element("p",{text:message})); box.append(icon,copy); $("#toasts").append(box); setTimeout(()=>box.remove(),4400); };
-      const saveJSON = (key,value) => { try { localStorage.setItem(key,JSON.stringify(value)); return true; } catch(error) { toast("Your browser could not save that locally.","error","Storage unavailable"); return false; } };
+      /** Use IndexedDB as the durable store, with localStorage as a synchronous fallback. */
+      const database = (() => {
+        let connection = null;
+        let opening = null;
+        const ready = () => connection || opening || (opening = new Promise((resolve,reject) => {
+          if (!window.indexedDB) { reject(new Error("IndexedDB unavailable")); return; }
+          const request = indexedDB.open("smarttransport-db",1);
+          request.onupgradeneeded = () => request.result.createObjectStore("settings");
+          request.onsuccess = () => { connection=request.result; opening=null; resolve(connection); };
+          request.onerror = () => { opening=null; reject(request.error); };
+        }));
+        const read = key => ready().then(db => new Promise((resolve,reject) => {
+          const request=db.transaction("settings","readonly").objectStore("settings").get(key);
+          request.onsuccess=()=>resolve(request.result);
+          request.onerror=()=>reject(request.error);
+        }));
+        const write = (key,value) => ready().then(db => new Promise((resolve,reject) => {
+          const request=db.transaction("settings","readwrite").objectStore("settings").put(value,key);
+          request.onsuccess=()=>resolve();
+          request.onerror=()=>reject(request.error);
+        }));
+        return { ready, read, write };
+      })();
+      const saveJSON = (key,value) => { try { localStorage.setItem(key,JSON.stringify(value)); database.write(key,value).catch(()=>{}); return true; } catch(error) { toast("Your browser could not save that locally.","error","Storage unavailable"); return false; } };
       const loadJSON = (key,fallback) => { try { const raw=localStorage.getItem(key); return raw?JSON.parse(raw):fallback; } catch(error) { return fallback; } };
+      /** Send booking data to the Node backend when the page is served by it. */
+      const backend = {
+        async listBookings() { const response=await fetch("/api/bookings");if(!response.ok)throw new Error("Backend unavailable");return response.json(); },
+        async saveBooking(booking) { const response=await fetch("/api/bookings",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(booking)});if(!response.ok)throw new Error("Booking could not be saved");return response.json(); },
+        async cancelBooking(id) { const response=await fetch("/api/bookings/"+encodeURIComponent(id),{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({status:"Cancelled",cancelled:new Date().toISOString()})});if(!response.ok)throw new Error("Booking could not be cancelled");return response.json(); }
+      };
       const random = (min,max) => { const span=max-min+1; if(window.crypto&&window.crypto.getRandomValues){const b=new Uint32Array(1);window.crypto.getRandomValues(b);return min+b[0]%span;}return min+Math.floor(Math.random()*span); };
 
       /** Place or clear a field error with matching ARIA state. */
@@ -532,7 +561,7 @@
         if(state.paying)return;const trip=draft(),price=state.quote;if(!trip||!price||price.key!==keyFor(trip)){toast("Your journey changed. Please review its fare again.","error","Quote expired");close("paymentModal");return;}
         if(!paymentValid()){toast("Check your payment details and try again.","error","Payment needs attention");return;}
         state.paying=true;const button=$("#payNow"),label=button.textContent;button.textContent="Processing securely…";button.disabled=true;
-        setTimeout(()=>{const booking={id:String(Date.now())+String(random(100,999)),pnr:pnr(),transport:trip.transport,source:trip.source,destination:trip.destination,date:trip.date,people:trip.people,tier:trip.tierName,amount:price.total,base:price.base,tax:price.tax,fee:price.fee,payment:methodName(),status:"Confirmed",created:new Date().toISOString()};state.bookings.unshift(booking);saveJSON(KEYS.bookings,state.bookings);renderBookingBadge();state.confirmed=booking;summary($("#confirmedSummary"),trip,price,booking.payment);$("#pnr").textContent=booking.pnr;buildPrint(booking);state.paying=false;button.disabled=false;button.textContent=label;setStep(3);toast("Your ticket "+booking.pnr+" is ready.","success","Booking confirmed");},850);
+        setTimeout(()=>{const booking={id:String(Date.now())+String(random(100,999)),pnr:pnr(),transport:trip.transport,source:trip.source,destination:trip.destination,date:trip.date,people:trip.people,tier:trip.tierName,amount:price.total,base:price.base,tax:price.tax,fee:price.fee,payment:methodName(),status:"Confirmed",created:new Date().toISOString()};state.bookings.unshift(booking);saveJSON(KEYS.bookings,state.bookings);backend.saveBooking(booking).catch(()=>{});renderBookingBadge();state.confirmed=booking;summary($("#confirmedSummary"),trip,price,booking.payment);$("#pnr").textContent=booking.pnr;buildPrint(booking);state.paying=false;button.disabled=false;button.textContent=label;setStep(3);toast("Your ticket "+booking.pnr+" is ready.","success","Booking confirmed");},850);
       };
       /** Construct a print-only ticket using safe text nodes. */
       const buildPrint = booking => { const target=$("#printContent");target.replaceChildren();[["PNR",booking.pnr],["Transport",booking.transport],["Route",booking.source+" → "+booking.destination],["Date",dateText(booking.date)],["Class / tier",booking.tier],["Passengers",String(booking.people)],["Payment",booking.payment],["Total paid",money.format(booking.amount)],["Status",booking.status]].forEach(pair=>{const line=element("p");line.append(element("strong",{text:pair[0]+": "}),document.createTextNode(pair[1]));target.append(line);}); };
@@ -555,7 +584,7 @@
       /** Ask for cancellation in an accessible custom dialog. */
       const askCancel = id => { const booking=state.bookings.find(item=>item.id===id);if(!booking||booking.status==="Cancelled")return;state.pending=id;$("#cancelCopy").textContent="Cancel "+booking.pnr+" from "+booking.source+" to "+booking.destination+"?";close("historyModal",false);open("cancelModal"); };
       /** Persist a cancellation without deleting the booking record. */
-      const cancelBooking = () => { const booking=state.bookings.find(item=>item.id===state.pending);if(!booking){close("cancelModal");return;}booking.status="Cancelled";booking.cancelled=new Date().toISOString();saveJSON(KEYS.bookings,state.bookings);renderBookingBadge();state.pending=null;renderHistory();close("cancelModal",false);open("historyModal");toast(booking.pnr+" is now marked as cancelled.","info","Booking cancelled"); };
+      const cancelBooking = () => { const booking=state.bookings.find(item=>item.id===state.pending);if(!booking){close("cancelModal");return;}booking.status="Cancelled";booking.cancelled=new Date().toISOString();saveJSON(KEYS.bookings,state.bookings);backend.cancelBooking(booking.id).catch(()=>{});renderBookingBadge();state.pending=null;renderHistory();close("cancelModal",false);open("historyModal");toast(booking.pnr+" is now marked as cancelled.","info","Booking cancelled"); };
       const focusables = root => $$("button:not([disabled]),[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex='-1'])",root).filter(node=>!node.closest("[hidden]"));
       /** Open a dialog, retain launch focus, and focus its first control. */
       const open = (id,trigger=document.activeElement) => { const modal=$("#"+id);state.restores.set(id,trigger);modal.classList.remove("hidden");modal.setAttribute("aria-hidden","false");document.body.classList.add("modal-open");setTimeout(()=>{const nodes=focusables(modal);if(nodes[0])nodes[0].focus();},0); };
@@ -593,7 +622,7 @@
         window.addEventListener("scroll",updateNavigation,{passive:true});updateNavigation();
       };
       /** Apply a persisted theme choice. */
-      const setTheme = theme => { state.theme=theme==="dark"?"dark":"light";document.body.dataset.theme=state.theme;const dark=state.theme==="dark";$("#themeToggle").textContent=dark?"☀":"◐";$("#themeToggle").setAttribute("aria-label",dark?"Switch to light mode":"Switch to dark mode");$("#themeToggle").setAttribute("aria-pressed",dark?"true":"false");try{localStorage.setItem(KEYS.theme,state.theme);}catch(error){} };
+      const setTheme = theme => { state.theme=theme==="dark"?"dark":"light";document.body.dataset.theme=state.theme;const dark=state.theme==="dark";$("#themeToggle").textContent=dark?"☀":"◐";$("#themeToggle").setAttribute("aria-label",dark?"Switch to light mode":"Switch to dark mode");$("#themeToggle").setAttribute("aria-pressed",dark?"true":"false");try{localStorage.setItem(KEYS.theme,state.theme);database.write(KEYS.theme,state.theme).catch(()=>{});}catch(error){} };
       /** Show local demo user state in the header. */
       const renderSession = () => { const logged=state.session&&state.session.name&&state.session.email;$("#guestArea").hidden=!!logged;$("#userArea").hidden=!logged;const mobileGuest=$("#mobileGuestArea");if(mobileGuest)mobileGuest.hidden=!!logged;if(!logged)return;$("#userName").textContent=state.session.name;$("#avatar").textContent=state.session.name.split(" ").map(part=>part.charAt(0)).join("").slice(0,2).toUpperCase();$("#userChip").setAttribute("aria-label","Signed in as "+state.session.name); };
       /** Switch between login and signup fields. */
@@ -698,10 +727,30 @@
         $$(".tab").forEach(button=>button.addEventListener("click",()=>authMode(button.dataset.auth)));$("#authForm").addEventListener("submit",submitAuth);$$("[data-close]").forEach(button=>button.addEventListener("click",()=>close(button.dataset.close)));$$(".modal").forEach(modal=>modal.addEventListener("mousedown",event=>{if(event.target===modal)close(modal.id);}));$("#suggestionList").addEventListener("click",event=>{const button=event.target.closest("[data-suggest]");if(!button)return;$("#transport").value=button.dataset.suggest;refreshTransport(false);$("#booking").scrollIntoView({behavior:"smooth",block:"start"});});document.addEventListener("keydown",trap);
       };
       /** Restore persistent non-sensitive data and initialize the standalone page. */
+      const hydrateDatabase = async () => {
+        try {
+          await database.ready();
+          const [bookings,session,theme]=await Promise.all([database.read(KEYS.bookings),database.read(KEYS.session),database.read(KEYS.theme)]);
+          if(bookings===undefined)await database.write(KEYS.bookings,state.bookings);else if(Array.isArray(bookings))state.bookings=bookings.filter(item=>item&&item.id&&item.pnr);
+          if(session===undefined)await database.write(KEYS.session,state.session);else if(session&&session.name&&session.email)state.session=session;
+          if(theme===undefined)await database.write(KEYS.theme,state.theme);else setTheme(theme);
+          renderSession();renderBookingBadge();
+        } catch(error) {
+          // The localStorage fallback remains active when IndexedDB is blocked.
+        }
+      };
+      const hydrateBackend = async () => {
+        try {
+          const result=await backend.listBookings();
+          if(Array.isArray(result.bookings)){state.bookings=result.bookings.filter(item=>item&&item.id&&item.pnr);saveJSON(KEYS.bookings,state.bookings);renderBookingBadge();}
+        } catch(error) {
+          // The local database remains available when the Node server is offline.
+        }
+      };
       const init = () => {
         let savedTheme=null;try{savedTheme=localStorage.getItem(KEYS.theme);}catch(error){}
         const savedBookings=loadJSON(KEYS.bookings,[]), savedSession=loadJSON(KEYS.session,null);state.bookings=Array.isArray(savedBookings)?savedBookings.filter(item=>item&&item.id&&item.pnr):[];state.session=savedSession&&savedSession.name&&savedSession.email?savedSession:null;
-        $("#date").min=today();$("#date").value=today();setTheme(savedTheme==="dark"?"dark":"light");$("#transport").value="local";refreshTransport(false);renderSession();renderBookingBadge();suggestions();bind();setupNavigation();
+        $("#date").min=today();$("#date").value=today();setTheme(savedTheme==="dark"?"dark":"light");$("#transport").value="local";refreshTransport(false);renderSession();renderBookingBadge();suggestions();bind();setupNavigation();hydrateDatabase();hydrateBackend();
       };
       init();
     })();
