@@ -1,4 +1,4 @@
-<!-- Smart Transport Portal v2.0 | Enhanced from github.com/sakibshaikh0806-hash/project-1 -->
+<!-- Smart Transport Portal v2.1 | Fixed autocomplete dropdown -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -35,7 +35,6 @@
     .skip { position:fixed; top:8px; left:10px; z-index:5000; padding:10px; border-radius:9px; color:#071d3b; background:#fff; transform:translateY(-150%); }
     .skip:focus { transform:translateY(0); }
     .wrap { width:min(1180px,calc(100% - 32px)); margin:auto; }
-    /* ── Scroll progress bar ── */
     .nav-progress { position:absolute; bottom:-1px; left:0; height:2px; width:0%; background:linear-gradient(90deg,var(--saffron),#d86f19); transition:width .1s linear; border-radius:0 2px 2px 0; }
 
     .header { position:sticky; z-index:100; top:0; border-bottom:1px solid rgba(215,225,236,.75); background:rgba(244,247,251,.78); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px); transition:box-shadow .2s,background .2s; }
@@ -52,7 +51,6 @@
     .nav-link,.icon,.text-button { position:relative; min-height:39px; padding:0 12px; border:0; border-radius:10px; color:var(--ink); background:transparent; font-size:.84rem; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:6px; transition:color .15s,background .15s; }
     .nav-link:hover { background:var(--soft); color:var(--navy-2); }
     .icon:hover,.text-button:hover { background:var(--soft); }
-    /* Active nav underline pill */
     .nav-link.active { color:var(--navy-2); }
     .nav-link.active::after { content:""; position:absolute; bottom:5px; left:50%; transform:translateX(-50%); width:18px; height:3px; border-radius:99px; background:var(--saffron); }
     body[data-theme="dark"] .nav-link.active { color:var(--saffron); }
@@ -68,20 +66,14 @@
     .user { display:flex; align-items:center; gap:5px; }
     .chip { display:flex; align-items:center; gap:6px; max-width:160px; padding:4px 8px 4px 4px; overflow:hidden; border:1px solid var(--line); border-radius:30px; background:var(--solid); font-size:.76rem; font-weight:800; white-space:nowrap; text-overflow:ellipsis; }
     .avatar { display:grid; width:27px; height:27px; flex:none; place-items:center; border-radius:50%; color:#fff; background:var(--blue); font-size:.68rem; }
-
-    /* Bookings badge */
     .nav-badge { display:inline-grid; min-width:18px; height:18px; place-items:center; padding:0 4px; border-radius:99px; color:#fff; background:var(--saffron); font-size:.58rem; font-weight:800; line-height:1; transition:transform .2s; }
     .nav-link:hover .nav-badge { transform:scale(1.15); }
-
-    /* ── Hamburger ── */
     .ham { display:none; width:39px; height:39px; flex-direction:column; align-items:center; justify-content:center; gap:5px; border:0; border-radius:10px; background:transparent; cursor:pointer; transition:background .15s; }
     .ham:hover { background:var(--soft); }
     .ham-bar { display:block; width:20px; height:2px; border-radius:2px; background:var(--ink); transition:transform .25s,opacity .2s,width .25s; transform-origin:center; }
     .ham[aria-expanded="true"] .ham-bar:nth-child(1) { transform:translateY(7px) rotate(45deg); }
     .ham[aria-expanded="true"] .ham-bar:nth-child(2) { opacity:0; width:0; }
     .ham[aria-expanded="true"] .ham-bar:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
-
-    /* ── Mobile drawer ── */
     .mobile-nav { position:fixed; inset:0; top:0; z-index:99; display:flex; flex-direction:column; padding-top:70px; background:var(--solid); transform:translateX(100%); transition:transform .28s cubic-bezier(.4,0,.2,1),visibility .28s; visibility:hidden; }
     .mobile-nav.open { transform:translateX(0); visibility:visible; }
     body.mobile-open { overflow:hidden; }
@@ -93,8 +85,6 @@
     .mobile-nav-divider { height:1px; background:var(--line); margin:10px 0; }
     .mobile-nav-actions { padding:0 22px 24px; display:flex; flex-direction:column; gap:9px; }
     .mobile-nav-actions .primary { width:100%; justify-content:center; min-height:50px; font-size:.95rem; }
-
-    /* A compact three-part navigation keeps the journey links centered at desktop widths. */
     .header-inner { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); gap:18px; }
     .brand { gap:11px; }
     .brand-mark { width:43px; height:43px; padding:5px; border-radius:13px; }
@@ -123,12 +113,6 @@
     .stats strong { display:block; color:#fff; font-size:1.04rem; letter-spacing:.01em; }
     .map-card { position:relative; display:flex; min-height:334px; flex-direction:column; padding:22px; overflow:hidden; border:1px solid rgba(255,255,255,.2); border-radius:26px; background:linear-gradient(145deg,rgba(255,255,255,.17),rgba(255,255,255,.045)); box-shadow:0 24px 54px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.12); backdrop-filter:blur(14px); animation:float .75s .12s both; }
     .map-card h2 { margin:0; font-size:1rem; } .map-card p { margin:4px 0; color:#c8d9eb; font-size:.78rem; }
-    .line-a,.line-b { position:absolute; left:13%; width:76%; height:3px; border-radius:9px; background:linear-gradient(90deg,var(--saffron),#ffd38e 45%,#73b3e2); transform-origin:left; }
-    .line-a { top:51%; transform:rotate(-21deg); }.line-b { top:55%; transform:rotate(27deg); }
-    .map-dot { position:absolute; display:grid; width:48px; height:48px; place-items:center; border:2px solid rgba(255,255,255,.7); border-radius:50%; color:#fff; background:#1a5688; box-shadow:0 0 0 7px rgba(26,86,136,.25); font-size:1.1rem; }
-    .map-dot small { position:absolute; top:54px; min-width:90px; color:#e9f3fc; font-size:.63rem; font-weight:800; text-align:center; }
-    .dot-one { left:9%; top:61%; }.dot-one small { left:-22px; }.dot-two { left:42%; top:28%; }.dot-two small { left:-20px; }.dot-three { right:11%; top:43%; }.dot-three small { left:-22px; }
-    .map-chip { position:absolute; right:20px; bottom:18px; padding:7px 10px; border:1px solid rgba(255,255,255,.16); border-radius:30px; background:rgba(7,29,59,.57); font-size:.68rem; font-weight:800; }
     .network-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
     .network-status { display:inline-flex; align-items:center; gap:6px; padding:5px 8px; border:1px solid rgba(255,255,255,.16); border-radius:99px; color:#eaf4ff; background:rgba(7,29,59,.35); font-size:.62rem; font-weight:800; white-space:nowrap; }
     .network-status i { width:6px; height:6px; border-radius:50%; background:#78dfad; box-shadow:0 0 0 4px rgba(120,223,173,.12); }
@@ -197,6 +181,52 @@
     @media(max-width:700px) { .header-inner { min-height:64px; }.nav-link { display:none; }.brand-mark { width:36px; height:36px; padding:7px; }.chip { max-width:96px; }.hero { padding-top:46px; }.suggestions { grid-template-columns:1fr; }.heading { display:block; }.route { grid-template-columns:1fr; gap:0; }.swap { width:100%; height:35px; margin:0 0 11px; }.swap:hover { transform:none; }.field-grid { grid-template-columns:1fr; gap:0; }.form-gap { gap:0; }.modes { grid-template-columns:repeat(3,1fr); }.benefits { grid-template-columns:1fr; }.benefits li { display:flex; }.benefit-icon { margin:0; }.payment-methods { grid-template-columns:repeat(2,minmax(0,1fr)); }.card-grid { grid-template-columns:minmax(0,1fr) minmax(0,1fr); }.card-number { grid-column:1/-1; }.footer-inner { display:block; }.footer p+p { margin-top:7px; } }
     @media(max-width:420px) { .wrap { width:min(100% - 22px,1180px); }.brand>span:last-child { display:grid; }.brand-name { font-size:.92rem; }.brand-subtitle { display:none; }.chip { display:none; }.login { padding:0 9px; }.actions,.wizard-actions { flex-direction:column; align-items:stretch; }.actions .primary { width:100%; }.wizard-actions .primary { width:100%; }.dialog-head { padding:18px 18px 0; }.dialog-body { padding:16px 18px 19px; }.steps { padding-left:18px; padding-right:18px; }.modal { padding:9px; }.qr-wrap { align-items:flex-start; } }
     @media(prefers-reduced-motion:reduce) { *,*:before,*:after { scroll-behavior:auto!important; animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; } }
+
+    /* ── Custom autocomplete dropdown (fixes stop selection) ── */
+    .autocomplete-wrapper { position:relative; display:block; }
+    .autocomplete-dropdown {
+      position:fixed;
+      z-index:2000;
+      max-height:228px;
+      overflow-y:auto;
+      border:1px solid var(--line);
+      border-radius:13px;
+      background:var(--solid);
+      box-shadow:0 14px 38px rgba(7,29,59,.17),0 2px 8px rgba(7,29,59,.08);
+      display:none;
+      scrollbar-width:thin;
+      scrollbar-color:var(--line) transparent;
+    }
+    body[data-theme="dark"] .autocomplete-dropdown { background:var(--solid); border-color:var(--line); box-shadow:0 14px 38px rgba(0,0,0,.38); }
+    .autocomplete-dropdown.open { display:block; }
+    .autocomplete-option {
+      padding:11px 14px;
+      cursor:pointer;
+      font-size:.83rem;
+      font-weight:600;
+      color:var(--ink);
+      border-bottom:1px solid var(--line);
+      transition:background .1s,color .1s;
+      outline:none;
+      user-select:none;
+    }
+    .autocomplete-option:last-child { border-bottom:0; }
+    .autocomplete-option:hover,
+    .autocomplete-option:focus { background:var(--soft); color:var(--navy-2); }
+    .autocomplete-option mark {
+      background:rgba(245,155,42,.28);
+      color:var(--navy-2);
+      border-radius:3px;
+      font-style:normal;
+      font-weight:800;
+      padding:0 1px;
+    }
+    .autocomplete-empty {
+      padding:14px;
+      color:var(--muted);
+      font-size:.8rem;
+      text-align:center;
+    }
   </style>
 </head>
 <body>
@@ -207,20 +237,11 @@
     <div class="wrap header-inner">
       <a href="#home" class="brand" aria-label="SmartTransport home">
         <span class="brand-mark" aria-hidden="true">
-          <!--
-            Professional "ST" monogram:
-            - Bold geometric letterforms with a transit-inspired connector bar
-            - The diagonal slash through "S" references speed / direction
-            - White on saffron-to-amber gradient background
-          -->
           <svg viewBox="0 0 44 44" fill="none" focusable="false" xmlns="http://www.w3.org/2000/svg">
-            <!-- "S" letterform — two stacked arcs with a centre bar -->
             <path d="M10 14.5 C10 11.5 12.5 9.5 16 9.5 L22 9.5 C25.5 9.5 27 11.2 27 13.5 C27 15.8 25.2 17 22 17.5 L16.5 18.5 C13 19.2 11 20.8 11 23.5 C11 26.2 13 28 16.5 28 L22.5 28 C25.8 28 27.5 26.2 27.5 24"
               stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- "T" letterform — horizontal cap + vertical stem -->
             <path d="M31 9.5 L43 9.5" stroke="white" stroke-width="2.6" stroke-linecap="round"/>
             <path d="M37 9.5 L37 28" stroke="white" stroke-width="2.6" stroke-linecap="round"/>
-            <!-- Speed accent — thin diagonal bar underneath -->
             <path d="M9 33 L43 33" stroke="rgba(255,255,255,0.35)" stroke-width="1.4" stroke-linecap="round"/>
             <path d="M13 37 L43 37" stroke="rgba(255,255,255,0.18)" stroke-width="1" stroke-linecap="round"/>
           </svg>
@@ -237,15 +258,12 @@
         <div id="guestArea"><button id="loginOpen" class="primary login" type="button" aria-label="Open login and sign up">Login</button></div>
         <div id="userArea" class="user" hidden><span id="userChip" class="chip"><span id="avatar" class="avatar" aria-hidden="true"></span><span id="userName"></span></span><button id="logout" class="icon" type="button" aria-label="Sign out">↪</button></div>
         <button class="ham" id="hamBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNav">
-          <span class="ham-bar"></span>
-          <span class="ham-bar"></span>
-          <span class="ham-bar"></span>
+          <span class="ham-bar"></span><span class="ham-bar"></span><span class="ham-bar"></span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Mobile navigation drawer -->
   <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" aria-hidden="true">
     <div class="mobile-nav-inner">
       <a href="#home" class="mobile-nav-link" id="mobileNavHome"><span class="nav-icon" aria-hidden="true">⌂</span> Home</a>
@@ -308,11 +326,23 @@
                 <button class="mode" type="button" data-mode="flight" aria-label="Select Domestic Flight"><span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M22 16.5l-9-5.5V4a2 2 0 0 0-4 0v7L2 16.5v2l9-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L14 19v-3l9 2.5v-2z"/></svg></span>Flight</button>
               </div>
               <div class="route">
-                <div class="field"><label for="source">Leaving from</label><input id="source" type="text" list="stations" autocomplete="off" placeholder="Choose a station or stop" aria-describedby="sourceError"><p id="sourceError" class="error" aria-live="polite"></p></div>
+                <!-- FIX: wrapped inputs in .autocomplete-wrapper; removed list="stations" -->
+                <div class="field">
+                  <label for="source">Leaving from</label>
+                  <div class="autocomplete-wrapper">
+                    <input id="source" type="text" autocomplete="off" placeholder="Tap to choose a station or stop" aria-describedby="sourceError" aria-autocomplete="list" aria-controls="source-list" role="combobox" aria-expanded="false">
+                  </div>
+                  <p id="sourceError" class="error" aria-live="polite"></p>
+                </div>
                 <button id="swap" class="swap" type="button" aria-label="Swap source and destination" title="Swap source and destination">↔</button>
-                <div class="field"><label for="destination">Going to</label><input id="destination" type="text" list="stations" autocomplete="off" placeholder="Choose a station or stop" aria-describedby="destinationError"><p id="destinationError" class="error" aria-live="polite"></p></div>
+                <div class="field">
+                  <label for="destination">Going to</label>
+                  <div class="autocomplete-wrapper">
+                    <input id="destination" type="text" autocomplete="off" placeholder="Tap to choose a station or stop" aria-describedby="destinationError" aria-autocomplete="list" aria-controls="destination-list" role="combobox" aria-expanded="false">
+                  </div>
+                  <p id="destinationError" class="error" aria-live="polite"></p>
+                </div>
               </div>
-              <datalist id="stations"></datalist>
               <div class="form-gap">
                 <div class="field-grid">
                   <div class="field"><label for="date">Date of journey</label><input id="date" type="date" aria-describedby="dateError"><p id="dateError" class="error" aria-live="polite"></p></div>
@@ -339,6 +369,7 @@
   </main>
   <footer class="footer"><div class="wrap footer-inner"><p><strong>SmartTransport</strong> · Mumbai, moving smarter.</p><p>Built for clear, accessible public-transport planning.</p></div></footer>
 
+  <!-- Auth Modal -->
   <div id="authModal" class="modal hidden" aria-hidden="true">
     <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="authTitle">
       <div class="dialog-head"><div><h2 id="authTitle">Welcome aboard</h2><p id="authSubtitle">Sign in to personalise this device.</p></div><button class="close" type="button" data-close="authModal" aria-label="Close login dialog">×</button></div>
@@ -356,6 +387,7 @@
     </section>
   </div>
 
+  <!-- Payment Modal -->
   <div id="paymentModal" class="modal hidden" aria-hidden="true">
     <section class="dialog wide" role="dialog" aria-modal="true" aria-labelledby="paymentTitle">
       <div class="dialog-head"><div><h2 id="paymentTitle">Secure checkout</h2><p>Review your plan, choose a payment method, and keep your ticket.</p></div><button class="close" type="button" data-close="paymentModal" aria-label="Close payment dialog">×</button></div>
@@ -395,58 +427,43 @@
       const $ = (sel, root=document) => root.querySelector(sel);
       const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
       const money = new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0});
-
-      /** Create a local date string so dates never shift at UTC midnight. */
       const today = () => { const now=new Date(); return new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10); };
-      /** Format a user-entered local date without UTC conversion. */
       const dateText = value => { const p=String(value||"").split("-"); if(p.length!==3)return value||"—"; const d=new Date(+p[0],+p[1]-1,+p[2]); return Number.isNaN(d.getTime())?value:d.toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}); };
       const norm = value => String(value||"").trim().toLocaleLowerCase();
       const digits = value => Array.from(String(value||"")).filter(x=>x>="0"&&x<="9").join("");
       const element = (tag, options={}) => { const node=document.createElement(tag); if(options.className)node.className=options.className; if(options.text!==undefined)node.textContent=options.text; if(options.attrs)Object.entries(options.attrs).forEach(([k,v])=>node.setAttribute(k,v)); return node; };
-      /** Generate a small accessible toast rather than using native alerts. */
       const toast = (message,type="info",title="SmartTransport") => { const box=element("div",{className:"toast "+type,attrs:{role:type==="error"?"alert":"status"}}); const icon=element("span",{text:type==="success"?"✓":type==="error"?"!":"i",attrs:{"aria-hidden":"true"}}); const copy=element("div"); copy.append(element("strong",{text:title}),element("p",{text:message})); box.append(icon,copy); $("#toasts").append(box); setTimeout(()=>box.remove(),4400); };
-      /** Use IndexedDB as the durable store, with localStorage as a synchronous fallback. */
+
       const database = (() => {
-        let connection = null;
-        let opening = null;
-        const ready = () => connection || opening || (opening = new Promise((resolve,reject) => {
-          if (!window.indexedDB) { reject(new Error("IndexedDB unavailable")); return; }
-          const request = indexedDB.open("smarttransport-db",1);
-          request.onupgradeneeded = () => request.result.createObjectStore("settings");
-          request.onsuccess = () => { connection=request.result; opening=null; resolve(connection); };
-          request.onerror = () => { opening=null; reject(request.error); };
+        let connection=null, opening=null;
+        const ready = () => connection||opening||(opening=new Promise((resolve,reject) => {
+          if(!window.indexedDB){reject(new Error("IndexedDB unavailable"));return;}
+          const request=indexedDB.open("smarttransport-db",1);
+          request.onupgradeneeded=()=>request.result.createObjectStore("settings");
+          request.onsuccess=()=>{connection=request.result;opening=null;resolve(connection);};
+          request.onerror=()=>{opening=null;reject(request.error);};
         }));
-        const read = key => ready().then(db => new Promise((resolve,reject) => {
-          const request=db.transaction("settings","readonly").objectStore("settings").get(key);
-          request.onsuccess=()=>resolve(request.result);
-          request.onerror=()=>reject(request.error);
-        }));
-        const write = (key,value) => ready().then(db => new Promise((resolve,reject) => {
-          const request=db.transaction("settings","readwrite").objectStore("settings").put(value,key);
-          request.onsuccess=()=>resolve();
-          request.onerror=()=>reject(request.error);
-        }));
+        const read = key => ready().then(db => new Promise((resolve,reject) => { const r=db.transaction("settings","readonly").objectStore("settings").get(key);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error); }));
+        const write = (key,value) => ready().then(db => new Promise((resolve,reject) => { const r=db.transaction("settings","readwrite").objectStore("settings").put(value,key);r.onsuccess=()=>resolve();r.onerror=()=>reject(r.error); }));
         return { ready, read, write };
       })();
-      const saveJSON = (key,value) => { try { localStorage.setItem(key,JSON.stringify(value)); database.write(key,value).catch(()=>{}); return true; } catch(error) { toast("Your browser could not save that locally.","error","Storage unavailable"); return false; } };
-      const loadJSON = (key,fallback) => { try { const raw=localStorage.getItem(key); return raw?JSON.parse(raw):fallback; } catch(error) { return fallback; } };
-      /** Send booking data to the Node backend when the page is served by it. */
-      const backend = {
-        async listBookings() { const response=await fetch("/api/bookings");if(!response.ok)throw new Error("Backend unavailable");return response.json(); },
-        async saveBooking(booking) { const response=await fetch("/api/bookings",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(booking)});if(!response.ok)throw new Error("Booking could not be saved");return response.json(); },
-        async cancelBooking(id) { const response=await fetch("/api/bookings/"+encodeURIComponent(id),{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({status:"Cancelled",cancelled:new Date().toISOString()})});if(!response.ok)throw new Error("Booking could not be cancelled");return response.json(); }
-      };
-      const random = (min,max) => { const span=max-min+1; if(window.crypto&&window.crypto.getRandomValues){const b=new Uint32Array(1);window.crypto.getRandomValues(b);return min+b[0]%span;}return min+Math.floor(Math.random()*span); };
 
-      /** Place or clear a field error with matching ARIA state. */
-      const fieldError = (id,errorId,message="") => { const field=$("#"+id), text=$("#"+errorId); if(field)field.setAttribute("aria-invalid",message?"true":"false"); if(text)text.textContent=message; };
+      const saveJSON = (key,value) => { try{localStorage.setItem(key,JSON.stringify(value));database.write(key,value).catch(()=>{});return true;}catch(error){toast("Your browser could not save that locally.","error","Storage unavailable");return false;} };
+      const loadJSON = (key,fallback) => { try{const raw=localStorage.getItem(key);return raw?JSON.parse(raw):fallback;}catch(error){return fallback;} };
+      const backend = {
+        async listBookings(){const r=await fetch("/api/bookings");if(!r.ok)throw new Error("unavailable");return r.json();},
+        async saveBooking(b){const r=await fetch("/api/bookings",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b)});if(!r.ok)throw new Error("save failed");return r.json();},
+        async cancelBooking(id){const r=await fetch("/api/bookings/"+encodeURIComponent(id),{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({status:"Cancelled",cancelled:new Date().toISOString()})});if(!r.ok)throw new Error("cancel failed");return r.json();}
+      };
+      const random = (min,max) => { const span=max-min+1;if(window.crypto&&window.crypto.getRandomValues){const b=new Uint32Array(1);window.crypto.getRandomValues(b);return min+b[0]%span;}return min+Math.floor(Math.random()*span); };
+
+      const fieldError = (id,errorId,message="") => { const field=$("#"+id),text=$("#"+errorId);if(field)field.setAttribute("aria-invalid",message?"true":"false");if(text)text.textContent=message; };
       const clearJourneyErrors = () => { fieldError("transport","transportError");fieldError("source","sourceError");fieldError("destination","destinationError");fieldError("date","dateError");fieldError("passengers","passengersError");fieldError("tier","tierError"); };
-      /** Read and validate the booking form, optionally leaving inline errors quiet during auto-updates. */
       const draft = (showErrors=true) => {
         if(showErrors)clearJourneyErrors();
-        const type=$("#transport").value, source=$("#source").value.trim(), destination=$("#destination").value.trim(), date=$("#date").value, people=Number($("#passengers").value), tier=$("#tier").value;
+        const type=$("#transport").value,source=$("#source").value.trim(),destination=$("#destination").value.trim(),date=$("#date").value,people=Number($("#passengers").value),tier=$("#tier").value;
         let okay=true;
-        const fail = (field,error,message) => { if(showErrors)fieldError(field,error,message);okay=false; };
+        const fail=(field,error,message)=>{if(showErrors)fieldError(field,error,message);okay=false;};
         if(!DATA[type])fail("transport","transportError","Choose a travel mode.");
         if(!source)fail("source","sourceError","Enter a starting station or stop.");
         if(!destination)fail("destination","destinationError","Enter a destination station or stop.");
@@ -456,119 +473,106 @@
         if(!tier)fail("tier","tierError","Choose a class or tier.");
         if(!okay)return null;
         const tierName=(DATA[type].tiers.find(pair=>pair[0]===tier)||["",tier])[1];
-        return {type,transport:DATA[type].label,source,destination,date,people,tier,tierName};
+        return{type,transport:DATA[type].label,source,destination,date,people,tier,tierName};
       };
-      /** Check whether enough clean data exists to silently request an automatic fare. */
       const journeyReady = () => {
-        const type=$("#transport").value, source=$("#source").value.trim(), destination=$("#destination").value.trim(), date=$("#date").value, people=Number($("#passengers").value), tier=$("#tier").value;
+        const type=$("#transport").value,source=$("#source").value.trim(),destination=$("#destination").value.trim(),date=$("#date").value,people=Number($("#passengers").value),tier=$("#tier").value;
         return Boolean(DATA[type]&&source&&destination&&norm(source)!==norm(destination)&&date&&date>=today()&&Number.isInteger(people)&&people>=1&&people<=10&&tier);
       };
       const keyFor = trip => [trip.type,norm(trip.source),norm(trip.destination),trip.date,trip.people,trip.tier].join("|");
-      /** Find route distance from the ordered local or metro list, with a fair fallback for a geocoded area. */
-      const distance = trip => { const stops=DATA[trip.type].stops; const a=stops.findIndex(x=>norm(x)===norm(trip.source)); const b=stops.findIndex(x=>norm(x)===norm(trip.destination)); return a>=0&&b>=0?Math.max(1,Math.abs(a-b)):3; };
-      /** Calculate the requested fares plus transparent 5% taxes and a convenience fee. */
+      const distance = trip => { const stops=DATA[trip.type].stops;const a=stops.findIndex(x=>norm(x)===norm(trip.source));const b=stops.findIndex(x=>norm(x)===norm(trip.destination));return a>=0&&b>=0?Math.max(1,Math.abs(a-b)):3; };
       const quote = trip => {
-        let base=0, note="", stations=null;
+        let base=0,note="",stations=null;
         if(trip.type==="local"){stations=distance(trip);const unit=5+2*stations;base=unit*trip.people;note=money.format(unit)+" per rider across "+stations+" stations";}
         if(trip.type==="metro"){stations=distance(trip);const unit=10+3*stations;base=unit*trip.people;note=money.format(unit)+" per rider across "+stations+" stations";}
         if(trip.type==="bus"){const unit=trip.tier==="premium"?12:8;base=unit*trip.people;note=money.format(unit)+" per rider"+(trip.tier==="premium"?" (AC)":"");}
         if(trip.type==="express"){const rates={sleeper:200,"3ac":500,"2ac":800,"1ac":1200};const unit=rates[trip.tier]||200;base=unit*trip.people;note=money.format(unit)+" per rider";}
         if(trip.type==="flight"){const key=keyFor(trip);if(!state.flightQuotes.has(key))state.flightQuotes.set(key,random(trip.tier==="business"?5600:3000,8000));const unit=state.flightQuotes.get(key);base=unit*trip.people;note=money.format(unit)+" estimated per traveller";}
-        const tax=Math.round(base*.05), fee=trip.people>=5?35:25;
-        return {key:keyFor(trip),base,tax,fee,total:base+tax+fee,note,stations};
+        const tax=Math.round(base*.05),fee=trip.people>=5?35:25;
+        return{key:keyFor(trip),base,tax,fee,total:base+tax+fee,note,stations};
       };
-      /** Render a fare breakdown without mixing user inputs into HTML strings. */
       const renderFare = () => {
-        const target=$("#fareDetails"), empty=$("#fareEmpty"); target.replaceChildren();
+        const target=$("#fareDetails"),empty=$("#fareEmpty");target.replaceChildren();
         if(!state.quote){empty.hidden=false;target.hidden=true;return;}
         empty.hidden=true;target.hidden=false;const lines=element("div",{className:"fare-lines"});
         [["Base fare",money.format(state.quote.base)],["Taxes (5%)",money.format(state.quote.tax)],["Convenience fee",money.format(state.quote.fee)]].forEach(pair=>{const row=element("div",{className:"fare-row"});row.append(element("span",{text:pair[0]}),element("strong",{text:pair[1]}));lines.append(row);});
         const total=element("div",{className:"fare-row fare-total"});total.append(element("span",{text:"Estimated total"}),element("strong",{text:money.format(state.quote.total)}));lines.append(total);
         target.append(lines,element("p",{className:"fare-caption",text:state.quote.note+". Demo estimate; taxes and fee are shown above."}));
       };
-      /** Invalidate price after any trip detail has changed, including an in-flight quote request. */
-      const invalidate = () => {
-        state.fareVersion+=1;
-        if(state.fareTimer){clearTimeout(state.fareTimer);state.fareTimer=null;}
-        state.quote=null;
-        renderFare();
-      };
-      /** Debounce an automatic quote without showing errors while the traveller is still typing. */
+      const invalidate = () => { state.fareVersion+=1;if(state.fareTimer){clearTimeout(state.fareTimer);state.fareTimer=null;}state.quote=null;renderFare(); };
       const scheduleAutoFare = (delay=380) => {
         invalidate();
         if(!journeyReady()){state.pendingAutoFare=false;return;}
-        clearJourneyErrors();
-        state.pendingAutoFare=true;
+        clearJourneyErrors();state.pendingAutoFare=true;
         state.fareTimer=setTimeout(()=>{state.fareTimer=null;calculate(true);},delay);
       };
-      /** Rebuild station and class controls when a transport mode changes. */
+
+      /* ── FIXED: refreshTransport no longer uses datalist ── */
       const refreshTransport = clear => {
-        const type=$("#transport").value, data=DATA[type]||DATA.local; const list=$("#stations"), tiers=$("#tier"); list.replaceChildren();tiers.replaceChildren();
-        data.stops.forEach(stop=>list.append(element("option",{attrs:{value:stop}})));data.tiers.forEach(pair=>tiers.append(element("option",{text:pair[1],attrs:{value:pair[0]}})));
-        if(clear){$("#source").value="";$("#destination").value="";}
+        const type=$("#transport").value,data=DATA[type]||DATA.local;
+        const tiers=$("#tier");
+        tiers.replaceChildren();
+        data.tiers.forEach(pair=>tiers.append(element("option",{text:pair[1],attrs:{value:pair[0]}})));
+        if(clear){
+          $("#source").value="";
+          $("#destination").value="";
+          /* close any open dropdowns */
+          $$(".autocomplete-dropdown").forEach(d=>d.classList.remove("open"));
+        }
         $$("#modes .mode").forEach(button=>{const on=button.dataset.mode===type;button.classList.toggle("selected",on);button.setAttribute("aria-pressed",on?"true":"false");});
         scheduleAutoFare();
       };
-      /** Simulate fare retrieval and discard stale results if the trip changes mid-request. */
+
       const calculate = (silent=false) => {
         if(state.calculating)return;
         const trip=draft(!silent);
         if(!trip){if(!silent)toast("Check the highlighted trip details, then try again.","error","Journey needs attention");return;}
         const version=state.fareVersion;
-        state.pendingAutoFare=false;
-        state.calculating=true;$("#fareBox").classList.add("loading");$("#fareBox").setAttribute("aria-busy","true");
+        state.pendingAutoFare=false;state.calculating=true;$("#fareBox").classList.add("loading");$("#fareBox").setAttribute("aria-busy","true");
         setTimeout(()=>{
           state.calculating=false;
           if(version!==state.fareVersion){
             if(state.pendingAutoFare&&journeyReady())calculate(true);
-            else {$("#fareBox").classList.remove("loading");$("#fareBox").setAttribute("aria-busy","false");renderFare();}
+            else{$("#fareBox").classList.remove("loading");$("#fareBox").setAttribute("aria-busy","false");renderFare();}
             return;
           }
           state.quote=quote(trip);$("#fareBox").classList.remove("loading");$("#fareBox").setAttribute("aria-busy","false");renderFare();
           if(!silent)toast("Your itemised fare is ready.","success","Fare calculated");
         },650);
       };
-      /** Assemble the booking review or confirmation card. */
+
       const summary = (target,trip,price,payment="") => {
         target.replaceChildren();const rows=[["Transport",trip.transport],["Route",trip.source+" → "+trip.destination],["Journey date",dateText(trip.date)],["Passengers",String(trip.people)],["Class / tier",trip.tierName],["Base fare",money.format(price.base)],["Taxes + fee",money.format(price.tax+price.fee)]];
-        if(payment)rows.push(["Payment",payment]); rows.forEach(pair=>{const row=element("div",{className:"summary-row"});row.append(element("span",{text:pair[0]}),element("strong",{text:pair[1]}));target.append(row);});
+        if(payment)rows.push(["Payment",payment]);rows.forEach(pair=>{const row=element("div",{className:"summary-row"});row.append(element("span",{text:pair[0]}),element("strong",{text:pair[1]}));target.append(row);});
         const total=element("div",{className:"summary-row summary-total"});total.append(element("span",{text:"Total paid"}),element("strong",{text:money.format(price.total)}));target.append(total);
       };
-      /** Enter the review only with a quote tied to the current form. */
       const startPayment = () => {
         const trip=draft();if(!trip){toast("Complete the journey details before payment.","error","Journey needs attention");return;}
         if(!state.quote||state.quote.key!==keyFor(trip)){toast(state.calculating||state.fareTimer?"Your fare is updating—please wait a moment.":"Complete valid trip details and your fare will update automatically.","info","Fare required");return;}
         state.confirmed=null;summary($("#reviewSummary"),trip,state.quote);$("#qrAmount").textContent="Scan to pay "+money.format(state.quote.total);setStep(1);open("paymentModal",$("#continue"));
       };
-      /** Change wizard step and expose the current step to sighted and keyboard users. */
       const setStep = number => { state.step=number;[1,2,3].forEach(n=>{$("#step"+n).hidden=n!==number;const marker=$('[data-step="'+n+'"]');marker.classList.toggle("active",n===number);marker.classList.toggle("done",n<number);}); };
       const setMethod = method => { state.method=method;["upi","card","qr","bank"].forEach(name=>$("#"+name+"Fields").hidden=name!==method);$$("#paymentMethods .pay-method").forEach(button=>button.setAttribute("aria-pressed",button.dataset.payment===method?"true":"false"));$("#paymentError").textContent=""; };
       const clearPayment = () => { $("#paymentError").textContent="";["upi","cardNumber","expiry","cvv","bank"].forEach(id=>$("#"+id).setAttribute("aria-invalid","false")); };
-      /** Check card numbers using Luhn validation. */
       const luhn = value => { const valueDigits=digits(value);let sum=0,alt=false;for(let i=valueDigits.length-1;i>=0;i-=1){let n=+valueDigits[i];if(alt){n*=2;if(n>9)n-=9;}sum+=n;alt=!alt;}return valueDigits.length>=13&&sum%10===0; };
       const cardBrand = value => { const valueDigits=digits(value);if(valueDigits.startsWith("4"))return"🟦 Visa";if(valueDigits.startsWith("5"))return"🔴 Mastercard";if(valueDigits.startsWith("6")||valueDigits.startsWith("81")||valueDigits.startsWith("82"))return"🟩 RuPay";return valueDigits?"Card number entered":""; };
-      const expiryValid = value => { if(value.length!==5||value.charAt(2)!=="/")return false;const m=+value.slice(0,2), y=+value.slice(3);const now=new Date(), cy=now.getFullYear()%100, cm=now.getMonth()+1;return Number.isInteger(m)&&m>=1&&m<=12&&Number.isInteger(y)&&(y>cy||(y===cy&&m>=cm)); };
-      /** Validate only the currently chosen payment control. */
+      const expiryValid = value => { if(value.length!==5||value.charAt(2)!=="/")return false;const m=+value.slice(0,2),y=+value.slice(3);const now=new Date(),cy=now.getFullYear()%100,cm=now.getMonth()+1;return Number.isInteger(m)&&m>=1&&m<=12&&Number.isInteger(y)&&(y>cy||(y===cy&&m>=cm)); };
       const paymentValid = () => {
         clearPayment();const fail=(id,message)=>{$("#"+id).setAttribute("aria-invalid","true");$("#paymentError").textContent=message;return false;};
-        if(state.method==="upi"){const value=$("#upi").value.trim(), at=value.indexOf("@");return at>0&&at<value.length-1&&!value.includes(" ")?true:fail("upi","Enter a valid UPI ID, such as name@upi.");}
+        if(state.method==="upi"){const value=$("#upi").value.trim(),at=value.indexOf("@");return at>0&&at<value.length-1&&!value.includes(" ")?true:fail("upi","Enter a valid UPI ID, such as name@upi.");}
         if(state.method==="card"){if(!luhn($("#cardNumber").value))return fail("cardNumber","Enter a valid card number.");if(!expiryValid($("#expiry").value))return fail("expiry","Enter a valid future expiry date.");const code=digits($("#cvv").value);return code.length>=3&&code.length<=4?true:fail("cvv","Enter a 3 or 4 digit CVV.");}
         if(state.method==="bank")return $("#bank").value?true:fail("bank","Select a bank to continue.");
         return true;
       };
-      /** Make a collision-resistant SMRT + 8 digit PNR. */
       const pnr = () => { const existing=new Set(state.bookings.map(item=>item.pnr));let code="";do{code=`SMRT${String(random(10000000,99999999))}`;}while(existing.has(code));return code; };
       const methodName = () => ({upi:"UPI",card:"Card",qr:"QR payment",bank:"Net Banking"})[state.method]||"Payment";
-      /** Store exactly one confirmed booking after payment validation. */
       const pay = () => {
         if(state.paying)return;const trip=draft(),price=state.quote;if(!trip||!price||price.key!==keyFor(trip)){toast("Your journey changed. Please review its fare again.","error","Quote expired");close("paymentModal");return;}
         if(!paymentValid()){toast("Check your payment details and try again.","error","Payment needs attention");return;}
         state.paying=true;const button=$("#payNow"),label=button.textContent;button.textContent="Processing securely…";button.disabled=true;
         setTimeout(()=>{const booking={id:String(Date.now())+String(random(100,999)),pnr:pnr(),transport:trip.transport,source:trip.source,destination:trip.destination,date:trip.date,people:trip.people,tier:trip.tierName,amount:price.total,base:price.base,tax:price.tax,fee:price.fee,payment:methodName(),status:"Confirmed",created:new Date().toISOString()};state.bookings.unshift(booking);saveJSON(KEYS.bookings,state.bookings);backend.saveBooking(booking).catch(()=>{});renderBookingBadge();state.confirmed=booking;summary($("#confirmedSummary"),trip,price,booking.payment);$("#pnr").textContent=booking.pnr;buildPrint(booking);state.paying=false;button.disabled=false;button.textContent=label;setStep(3);toast("Your ticket "+booking.pnr+" is ready.","success","Booking confirmed");},850);
       };
-      /** Construct a print-only ticket using safe text nodes. */
       const buildPrint = booking => { const target=$("#printContent");target.replaceChildren();[["PNR",booking.pnr],["Transport",booking.transport],["Route",booking.source+" → "+booking.destination],["Date",dateText(booking.date)],["Class / tier",booking.tier],["Passengers",String(booking.people)],["Payment",booking.payment],["Total paid",money.format(booking.amount)],["Status",booking.status]].forEach(pair=>{const line=element("p");line.append(element("strong",{text:pair[0]+": "}),document.createTextNode(pair[1]));target.append(line);}); };
-      /** Render past bookings as DOM nodes to avoid stored route text becoming markup. */
       const renderHistory = () => {
         const root=$("#history");root.replaceChildren();if(!state.bookings.length){root.append(element("div",{className:"empty",text:"No tickets yet. Your confirmed journeys will appear here."}));return;}
         const wrap=element("div",{className:"table-wrap"}),table=element("table",{className:"bookings",attrs:{"aria-label":"Booking history"}}),head=document.createElement("thead"),headRow=document.createElement("tr");
@@ -576,28 +580,15 @@
         state.bookings.forEach(booking=>{const row=document.createElement("tr");[booking.pnr,booking.transport,booking.source+" → "+booking.destination,dateText(booking.date),booking.tier,money.format(booking.amount)].forEach(value=>row.append(element("td",{text:value})));const stateCell=document.createElement("td");stateCell.append(element("span",{className:"status "+(booking.status==="Cancelled"?"cancel":"ok"),text:booking.status}));row.append(stateCell);const action=document.createElement("td"),button=element("button",{className:"cancel-btn",text:booking.status==="Cancelled"?"Cancelled":"Cancel",attrs:{type:"button","aria-label":"Cancel booking "+booking.pnr}});button.disabled=booking.status==="Cancelled";button.dataset.cancel=booking.id;action.append(button);row.append(action);body.append(row);});
         table.append(head,body);wrap.append(table);root.append(wrap);
       };
-      /** Keep the navigation badge in sync with confirmed bookings stored on this device. */
-      const renderBookingBadge = () => {
-        const badge=$("#bookingsBadge");
-        if(!badge)return;
-        const total=state.bookings.filter(booking=>booking.status==="Confirmed").length;
-        badge.hidden=total===0;
-        badge.textContent=String(total);
-      };
-      /** Ask for cancellation in an accessible custom dialog. */
+      const renderBookingBadge = () => { const badge=$("#bookingsBadge");if(!badge)return;const total=state.bookings.filter(b=>b.status==="Confirmed").length;badge.hidden=total===0;badge.textContent=String(total); };
       const askCancel = id => { const booking=state.bookings.find(item=>item.id===id);if(!booking||booking.status==="Cancelled")return;state.pending=id;$("#cancelCopy").textContent="Cancel "+booking.pnr+" from "+booking.source+" to "+booking.destination+"?";close("historyModal",false);open("cancelModal"); };
-      /** Persist a cancellation without deleting the booking record. */
       const cancelBooking = () => { const booking=state.bookings.find(item=>item.id===state.pending);if(!booking){close("cancelModal");return;}booking.status="Cancelled";booking.cancelled=new Date().toISOString();saveJSON(KEYS.bookings,state.bookings);backend.cancelBooking(booking.id).catch(()=>{});renderBookingBadge();state.pending=null;renderHistory();close("cancelModal",false);open("historyModal");toast(booking.pnr+" is now marked as cancelled.","info","Booking cancelled"); };
       const focusables = root => $$("button:not([disabled]),[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex='-1'])",root).filter(node=>!node.closest("[hidden]"));
-      /** Open a dialog, retain launch focus, and focus its first control. */
       const open = (id,trigger=document.activeElement) => { const modal=$("#"+id);state.restores.set(id,trigger);modal.classList.remove("hidden");modal.setAttribute("aria-hidden","false");document.body.classList.add("modal-open");setTimeout(()=>{const nodes=focusables(modal);if(nodes[0])nodes[0].focus();},0); };
-      /** Close a dialog and optionally restore the launch control. */
       const close = (id,restore=true) => { const modal=$("#"+id);if(!modal||modal.classList.contains("hidden"))return;modal.classList.add("hidden");modal.setAttribute("aria-hidden","true");if(!$$(".modal").some(node=>!node.classList.contains("hidden")))document.body.classList.remove("modal-open");const previous=state.restores.get(id);if(restore&&previous&&document.contains(previous))previous.focus(); };
-      /** Trap keyboard navigation inside the active dialog and support Escape. */
       const trap = event => { const modal=$$(".modal").find(node=>!node.classList.contains("hidden"));if(!modal){if(event.key==="Escape"&&state.closeMobileNavigation)state.closeMobileNavigation();return;}if(event.key==="Escape"){event.preventDefault();close(modal.id);return;}if(event.key!=="Tab")return;const nodes=focusables(modal);if(!nodes.length)return;const first=nodes[0],last=nodes[nodes.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();} };
-      /** Wire the responsive drawer, active route links, scroll progress and mobile shortcuts. */
       const setupNavigation = () => {
-        const header=$("#mainHeader"), progress=$("#navProgress"), menu=$("#mobileNav"), hamburger=$("#hamBtn");
+        const header=$("#mainHeader"),progress=$("#navProgress"),menu=$("#mobileNav"),hamburger=$("#hamBtn");
         const closeMobileNavigation = () => {
           if(!menu||!hamburger||!menu.classList.contains("open"))return;
           menu.classList.remove("open");menu.setAttribute("aria-hidden","true");hamburger.setAttribute("aria-expanded","false");document.body.classList.remove("mobile-open");hamburger.focus();
@@ -624,112 +615,231 @@
         };
         window.addEventListener("scroll",updateNavigation,{passive:true});updateNavigation();
       };
-      /** Apply a persisted theme choice. */
       const setTheme = theme => { state.theme=theme==="dark"?"dark":"light";document.body.dataset.theme=state.theme;const dark=state.theme==="dark";$("#themeToggle").textContent=dark?"☀":"◐";$("#themeToggle").setAttribute("aria-label",dark?"Switch to light mode":"Switch to dark mode");$("#themeToggle").setAttribute("aria-pressed",dark?"true":"false");try{localStorage.setItem(KEYS.theme,state.theme);database.write(KEYS.theme,state.theme).catch(()=>{});}catch(error){} };
-      /** Show local demo user state in the header. */
       const renderSession = () => { const logged=state.session&&state.session.name&&state.session.email;$("#guestArea").hidden=!!logged;$("#userArea").hidden=!logged;const mobileGuest=$("#mobileGuestArea");if(mobileGuest)mobileGuest.hidden=!!logged;if(!logged)return;$("#userName").textContent=state.session.name;$("#avatar").textContent=state.session.name.split(" ").map(part=>part.charAt(0)).join("").slice(0,2).toUpperCase();$("#userChip").setAttribute("aria-label","Signed in as "+state.session.name); };
-      /** Switch between login and signup fields. */
       const authMode = mode => { const signup=mode==="signup";$("#authForm").dataset.mode=signup?"signup":"login";$("#nameField").hidden=!signup;$("#confirmField").hidden=!signup;$("#authTitle").textContent=signup?"Create your local profile":"Welcome aboard";$("#authSubtitle").textContent=signup?"Save a simple display profile on this device.":"Sign in to personalise this device.";$("#authSubmit").textContent=signup?"Create account":"Log in";$("#authPassword").autocomplete=signup?"new-password":"current-password";$("#loginTab").setAttribute("aria-selected",signup?"false":"true");$("#signupTab").setAttribute("aria-selected",signup?"true":"false");[["authName","authNameError"],["authEmail","authEmailError"],["authPassword","authPasswordError"],["authConfirm","authConfirmError"]].forEach(pair=>fieldError(pair[0],pair[1])); };
-      /** Validate a local display-session form without saving password text. */
       const submitAuth = event => { event.preventDefault();const signup=$("#authForm").dataset.mode==="signup",name=$("#authName").value.trim(),email=$("#authEmail").value.trim(),password=$("#authPassword").value,confirm=$("#authConfirm").value;let okay=true;[["authName","authNameError"],["authEmail","authEmailError"],["authPassword","authPasswordError"],["authConfirm","authConfirmError"]].forEach(pair=>fieldError(pair[0],pair[1]));if(signup&&name.length<2){fieldError("authName","authNameError","Enter at least two characters.");okay=false;}const at=email.indexOf("@");if(at<1||at===email.length-1||email.includes(" ")){fieldError("authEmail","authEmailError","Enter a valid email address.");okay=false;}if(password.length<6){fieldError("authPassword","authPasswordError","Use at least six characters.");okay=false;}if(signup&&confirm!==password){fieldError("authConfirm","authConfirmError","Passwords do not match.");okay=false;}if(!okay)return;const fallback=email.split("@")[0].split(".").filter(Boolean).map(word=>word.charAt(0).toUpperCase()+word.slice(1)).join(" ")||"Traveller";state.session={name:signup?name:fallback,email};saveJSON(KEYS.session,state.session);renderSession();$("#authForm").reset();close("authModal");toast("Welcome, "+state.session.name+".","success",signup?"Profile created":"Signed in"); };
 
+      /* ── Location & suggestions ── */
       const markers=[{name:"Andheri Metro",type:"metro",lat:19.1197,lon:72.8468},{name:"Ghatkopar Metro",type:"metro",lat:19.086,lon:72.908},{name:"Versova Metro",type:"metro",lat:19.1318,lon:72.8144},{name:"Dahisar East Metro",type:"metro",lat:19.2594,lon:72.8587},{name:"Aarey Metro",type:"metro",lat:19.1555,lon:72.8781},{name:"Dadar Station",type:"local",lat:19.0178,lon:72.8478},{name:"Bandra Station",type:"local",lat:19.0544,lon:72.8402},{name:"CSMT",type:"local",lat:18.9398,lon:72.8355},{name:"Thane Station",type:"local",lat:19.1862,lon:72.9757}];
-      /** Measure nearby station distance in kilometres. */
       const km = (a,b,c,d) => { const r=x=>x*Math.PI/180,earth=6371,dl=r(c-a),dn=r(d-b),h=Math.sin(dl/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(dn/2)**2;return earth*2*Math.atan2(Math.sqrt(h),Math.sqrt(1-h)); };
       const nearby = (lat,lon) => { if(!Number.isFinite(lat)||!Number.isFinite(lon))return null;let best=null;markers.forEach(marker=>{const d=km(lat,lon,marker.lat,marker.lon);if(!best||d<best.d)best={...marker,d};});return best&&best.d<=3?best:null; };
-      /** Render practical nearby choices and always include BEST Bus. */
       const suggestions = (area="",lat=null,lon=null) => { const root=$("#suggestionList");root.replaceChildren();const station=nearby(lat,lon),cards=[];if(station&&station.type==="metro")cards.push({type:"metro",title:"Take the Metro",copy:station.name+" is about "+station.d.toFixed(1)+" km away."});else if(station&&station.type==="local")cards.push({type:"local",title:"Take the Local",copy:station.name+" is about "+station.d.toFixed(1)+" km away."});else cards.push({type:"local",title:"Mumbai Local",copy:area?"A reliable city connection near "+area+".":"A quick option for longer city hops."});cards.push({type:"bus",title:"BEST Bus fallback",copy:"Flexible, affordable connections across Mumbai."});cards.push({type:"metro",title:"Metro where it fits",copy:"Line 1, 2A and 7 stops are ready in the planner."});
         cards.forEach(card=>{const data=DATA[card.type],article=element("article",{className:"suggestion"});const iconSpan=element("span",{className:"suggestion-icon",attrs:{"aria-hidden":"true"}});iconSpan.innerHTML=data.icon;article.append(iconSpan,element("h3",{text:card.title}),element("p",{text:card.copy}));const button=element("button",{className:"text-button",text:"Plan this route →",attrs:{type:"button","aria-label":"Plan a "+data.label+" route"}});button.dataset.suggest=card.type;article.append(button);root.append(article);}); };
       const suggestionLoading = () => { const root=$("#suggestionList");root.replaceChildren();const loading=element("div",{className:"suggestion-loading"});loading.append(element("span",{className:"spinner",attrs:{"aria-hidden":"true"}}),document.createTextNode("Finding nearby travel options…"));root.append(loading); };
-      /** Reverse-geocode only after an explicit location action.
-       *  Uses BigDataCloud's free browser-friendly API (no key, proper CORS).
-       *  Falls back gracefully if the network is unavailable. */
-      const reverse = async (lat, lon) => {
-        const url =
-          "https://api.bigdatacloud.net/data/reverse-geocode-client" +
-          "?latitude="  + encodeURIComponent(lat) +
-          "&longitude=" + encodeURIComponent(lon) +
-          "&localityLanguage=en";
-        const res = await fetch(url, { headers: { Accept: "application/json" } });
-        if (!res.ok) throw new Error("geocode unavailable");
-        const data = await res.json();
-        return (
-          data.locality           ||   // suburb / area name
-          data.city               ||
-          data.principalSubdivision ||
-          data.countryName        ||
-          "your current area"
-        );
+      const reverse = async (lat,lon) => {
+        const url="https://api.bigdatacloud.net/data/reverse-geocode-client?latitude="+encodeURIComponent(lat)+"&longitude="+encodeURIComponent(lon)+"&localityLanguage=en";
+        const res=await fetch(url,{headers:{Accept:"application/json"}});
+        if(!res.ok)throw new Error("geocode unavailable");
+        const data=await res.json();
+        return data.locality||data.city||data.principalSubdivision||data.countryName||"your current area";
       };
-      /** Locate, reverse-geocode and prefill the source input with graceful failure states. */
       const locate = () => {
-        if (!navigator.geolocation) {
-          $("#locationStatus").textContent = "Geolocation is not supported in this browser.";
-          suggestions();
-          toast("Your browser does not support location sharing.", "error", "Location unavailable");
-          return;
-        }
-        const btn = $("#locationButton");
-        btn.disabled = true;
-        btn.textContent = "Locating…";
-        $("#locationStatus").textContent = "Finding your neighbourhood…";
-        suggestionLoading();
+        if(!navigator.geolocation){$("#locationStatus").textContent="Geolocation is not supported in this browser.";suggestions();toast("Your browser does not support location sharing.","error","Location unavailable");return;}
+        const btn=$("#locationButton");btn.disabled=true;btn.textContent="Locating…";$("#locationStatus").textContent="Finding your neighbourhood…";suggestionLoading();
+        navigator.geolocation.getCurrentPosition(async pos=>{
+          const lat=pos.coords.latitude,lon=pos.coords.longitude;let area="your current area";
+          try{area=await reverse(lat,lon);}catch(err){toast("Coordinates found but area name unavailable — source left blank.","info","Location noted");}
+          if(area!=="your current area"){$("#source").value=area;scheduleAutoFare(0);}
+          $("#locationStatus").textContent="Location found near "+area+" ("+lat.toFixed(4)+", "+lon.toFixed(4)+").";
+          const st=$("#suggestionText");if(st)st.textContent="Suggestions tailored around "+area+". Your source field has been prefilled — edit it anytime.";
+          suggestions(area,lat,lon);btn.disabled=false;btn.textContent="⌖ Use my location";toast("Source set to "+area+".","success","Location added");
+        },error=>{
+          const messages={1:"Location access was denied. You can still type a source.",2:"Position unavailable. Please enter a source manually.",3:"Location lookup timed out. Please enter a source."};
+          const msg=messages[error.code]||"Location could not be determined.";
+          $("#locationStatus").textContent=msg;const st=$("#suggestionText");if(st)st.textContent="No location was shared. You can plan any route manually.";
+          suggestions();btn.disabled=false;btn.textContent="⌖ Use my location";toast(msg,"info","Location not shared");
+        },{enableHighAccuracy:true,timeout:12000,maximumAge:60000});
+      };
 
-        navigator.geolocation.getCurrentPosition(
-          async pos => {
-            const lat = pos.coords.latitude, lon = pos.coords.longitude;
-            let area = "your current area";
-            try {
-              area = await reverse(lat, lon);
-            } catch (err) {
-              toast("Coordinates found but area name unavailable — source left blank.", "info", "Location noted");
+      /* ══════════════════════════════════════════════════════
+         FIX: Custom autocomplete dropdown — replaces datalist
+         Uses position:fixed so overflow:hidden on .booking-shell
+         does not clip the popup.
+         ══════════════════════════════════════════════════════ */
+      const setupDropdown = (inputId) => {
+        const input = $("#" + inputId);
+        if (!input) return;
+
+        /* Dropdown lives on <body> to escape all overflow:hidden ancestors */
+        const dropdown = document.createElement("div");
+        dropdown.className = "autocomplete-dropdown";
+        dropdown.id = inputId + "-list";
+        dropdown.setAttribute("role", "listbox");
+        dropdown.setAttribute("aria-label", "Station options");
+        document.body.append(dropdown);
+
+        const getStops = () => (DATA[$("#transport").value] || DATA.local).stops;
+
+        const position = () => {
+          const rect = input.getBoundingClientRect();
+          dropdown.style.top   = (rect.bottom + 4) + "px";
+          dropdown.style.left  = rect.left + "px";
+          dropdown.style.width = rect.width + "px";
+        };
+
+        const populate = () => {
+          const query = input.value.trim().toLowerCase();
+          const stops = getStops().filter(s => !query || s.toLowerCase().includes(query));
+          dropdown.replaceChildren();
+
+          if (!stops.length) {
+            const empty = document.createElement("div");
+            empty.className = "autocomplete-empty";
+            empty.textContent = "No stops match "" + input.value.trim() + """;
+            dropdown.append(empty);
+            position();
+            dropdown.classList.add("open");
+            input.setAttribute("aria-expanded", "true");
+            return;
+          }
+
+          stops.forEach(stop => {
+            const opt = document.createElement("div");
+            opt.className = "autocomplete-option";
+            opt.setAttribute("role", "option");
+            opt.setAttribute("tabindex", "-1");
+
+            /* Highlight matched substring */
+            if (query) {
+              const idx = stop.toLowerCase().indexOf(query);
+              if (idx >= 0) {
+                opt.append(
+                  document.createTextNode(stop.slice(0, idx)),
+                  Object.assign(document.createElement("mark"), { textContent: stop.slice(idx, idx + query.length) }),
+                  document.createTextNode(stop.slice(idx + query.length))
+                );
+              } else {
+                opt.textContent = stop;
+              }
+            } else {
+              opt.textContent = stop;
             }
-            // Only prefill if we got a real area name
-            if (area !== "your current area") {
-              $("#source").value = area;
+
+            /* Select on click */
+            opt.addEventListener("mousedown", e => {
+              e.preventDefault();
+              input.value = stop;
+              dropdown.classList.remove("open");
+              input.setAttribute("aria-expanded", "false");
               scheduleAutoFare(0);
+              input.focus();
+            });
+
+            /* Keyboard: navigate and select within dropdown */
+            opt.addEventListener("keydown", e => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                input.value = stop;
+                dropdown.classList.remove("open");
+                input.setAttribute("aria-expanded", "false");
+                scheduleAutoFare(0);
+                input.focus();
+              } else if (e.key === "ArrowDown") {
+                e.preventDefault();
+                const next = opt.nextElementSibling;
+                if (next && next.classList.contains("autocomplete-option")) next.focus();
+                else dropdown.querySelector(".autocomplete-option")?.focus();
+              } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+                const prev = opt.previousElementSibling;
+                if (prev && prev.classList.contains("autocomplete-option")) prev.focus();
+                else { dropdown.classList.remove("open"); input.setAttribute("aria-expanded","false"); input.focus(); }
+              } else if (e.key === "Escape") {
+                dropdown.classList.remove("open");
+                input.setAttribute("aria-expanded", "false");
+                input.focus();
+              } else if (e.key === "Tab") {
+                dropdown.classList.remove("open");
+                input.setAttribute("aria-expanded", "false");
+              }
+            });
+
+            dropdown.append(opt);
+          });
+
+          position();
+          dropdown.classList.add("open");
+          input.setAttribute("aria-expanded", "true");
+        };
+
+        const hideDropdown = () => {
+          setTimeout(() => {
+            /* Only close if focus left both input and dropdown */
+            if (!dropdown.contains(document.activeElement) && document.activeElement !== input) {
+              dropdown.classList.remove("open");
+              input.setAttribute("aria-expanded", "false");
             }
-            $("#locationStatus").textContent =
-              "Location found near " + area +
-              " (" + lat.toFixed(4) + ", " + lon.toFixed(4) + ").";
-            const st = $("#suggestionText");
-            if (st) st.textContent =
-              "Suggestions tailored around " + area +
-              ". Your source field has been prefilled — edit it anytime.";
-            suggestions(area, lat, lon);
-            btn.disabled = false;
-            btn.textContent = "⌖ Use my location";
-            toast("Source set to " + area + ".", "success", "Location added");
-          },
-          error => {
-            const messages = {
-              1: "Location access was denied. You can still type a source.",
-              2: "Position unavailable. Please enter a source manually.",
-              3: "Location lookup timed out. Please enter a source."
-            };
-            const msg = messages[error.code] || "Location could not be determined.";
-            $("#locationStatus").textContent = msg;
-            const st = $("#suggestionText");
-            if (st) st.textContent =
-              "No location was shared. You can plan any route manually.";
-            suggestions();
-            btn.disabled = false;
-            btn.textContent = "⌖ Use my location";
-            toast(msg, "info", "Location not shared");
-          },
-          { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 }
-        );
+          }, 160);
+        };
+
+        input.addEventListener("click",  populate);
+        input.addEventListener("focus",  populate);
+        input.addEventListener("input",  populate);
+        input.addEventListener("blur",   hideDropdown);
+
+        input.addEventListener("keydown", e => {
+          if (e.key === "Escape") {
+            dropdown.classList.remove("open");
+            input.setAttribute("aria-expanded", "false");
+            return;
+          }
+          if (e.key === "ArrowDown" && dropdown.classList.contains("open")) {
+            e.preventDefault();
+            dropdown.querySelector(".autocomplete-option")?.focus();
+            return;
+          }
+          if (e.key === "ArrowDown") { populate(); }
+        });
+
+        /* Reposition on scroll / resize so dropdown tracks the input */
+        window.addEventListener("scroll",  () => { if (dropdown.classList.contains("open")) position(); }, { passive: true });
+        window.addEventListener("resize",  () => { if (dropdown.classList.contains("open")) position(); }, { passive: true });
+
+        /* Close when clicking outside */
+        document.addEventListener("mousedown", e => {
+          if (!dropdown.contains(e.target) && e.target !== input) {
+            dropdown.classList.remove("open");
+            input.setAttribute("aria-expanded", "false");
+          }
+        }, true);
       };
-      /** Register all interactive behaviour without inline event handlers. */
+
+      /* ── Wire everything up ── */
       const bind = () => {
-        $("#heroBook").addEventListener("click",()=>$("#booking").scrollIntoView({behavior:"smooth",block:"start"}));$("#locationButton").addEventListener("click",locate);$("#themeToggle").addEventListener("click",()=>setTheme(state.theme==="dark"?"light":"dark"));
-        $("#loginOpen").addEventListener("click",()=>{authMode("login");open("authModal",$("#loginOpen"));});$("#logout").addEventListener("click",()=>{state.session=null;try{localStorage.removeItem(KEYS.session);}catch(error){}renderSession();toast("You are signed out on this device.","info","Signed out");});$("#historyOpen").addEventListener("click",()=>{renderHistory();open("historyModal",$("#historyOpen"));});
-        $("#modes").addEventListener("click",event=>{const button=event.target.closest("[data-mode]");if(!button)return;$("#transport").value=button.dataset.mode;refreshTransport(true);});$("#transport").addEventListener("change",()=>refreshTransport(true));$("#swap").addEventListener("click",()=>{const a=$("#source"),b=$("#destination"),value=a.value;a.value=b.value;b.value=value;scheduleAutoFare(0);toast("Source and destination swapped.","info","Route updated");});
-        ["source","destination","date","passengers","tier"].forEach(id=>["input","change"].forEach(eventName=>$("#"+id).addEventListener(eventName,()=>scheduleAutoFare())));$("#continue").addEventListener("click",startPayment);$("#reviewNext").addEventListener("click",()=>setStep(2));$("#payBack").addEventListener("click",()=>setStep(1));$("#paymentMethods").addEventListener("click",event=>{const button=event.target.closest("[data-payment]");if(button)setMethod(button.dataset.payment);});
-        $("#cardNumber").addEventListener("input",event=>{const value=digits(event.target.value).slice(0,16);event.target.value=value.match(/.{1,4}/g)?value.match(/.{1,4}/g).join(" "):"";$("#cardType").textContent=cardBrand(value);});$("#expiry").addEventListener("input",event=>{const value=digits(event.target.value).slice(0,4);event.target.value=value.length>2?value.slice(0,2)+"/"+value.slice(2):value;});$("#payNow").addEventListener("click",pay);$("#print").addEventListener("click",()=>{if(state.confirmed)window.print();});$("#viewBookings").addEventListener("click",()=>{close("paymentModal",false);renderHistory();open("historyModal");});$("#history").addEventListener("click",event=>{const button=event.target.closest("[data-cancel]");if(button)askCancel(button.dataset.cancel);});$("#confirmCancel").addEventListener("click",cancelBooking);
-        $$(".tab").forEach(button=>button.addEventListener("click",()=>authMode(button.dataset.auth)));$("#authForm").addEventListener("submit",submitAuth);$$("[data-close]").forEach(button=>button.addEventListener("click",()=>close(button.dataset.close)));$$(".modal").forEach(modal=>modal.addEventListener("mousedown",event=>{if(event.target===modal)close(modal.id);}));$("#suggestionList").addEventListener("click",event=>{const button=event.target.closest("[data-suggest]");if(!button)return;$("#transport").value=button.dataset.suggest;refreshTransport(false);$("#booking").scrollIntoView({behavior:"smooth",block:"start"});});document.addEventListener("keydown",trap);
+        $("#heroBook").addEventListener("click",()=>$("#booking").scrollIntoView({behavior:"smooth",block:"start"}));
+        $("#locationButton").addEventListener("click",locate);
+        $("#themeToggle").addEventListener("click",()=>setTheme(state.theme==="dark"?"light":"dark"));
+        $("#loginOpen").addEventListener("click",()=>{authMode("login");open("authModal",$("#loginOpen"));});
+        $("#logout").addEventListener("click",()=>{state.session=null;try{localStorage.removeItem(KEYS.session);}catch(error){}renderSession();toast("You are signed out on this device.","info","Signed out");});
+        $("#historyOpen").addEventListener("click",()=>{renderHistory();open("historyModal",$("#historyOpen"));});
+        $("#modes").addEventListener("click",event=>{const button=event.target.closest("[data-mode]");if(!button)return;$("#transport").value=button.dataset.mode;refreshTransport(true);});
+        $("#transport").addEventListener("change",()=>refreshTransport(true));
+        $("#swap").addEventListener("click",()=>{const a=$("#source"),b=$("#destination"),value=a.value;a.value=b.value;b.value=value;scheduleAutoFare(0);toast("Source and destination swapped.","info","Route updated");});
+        ["source","destination","date","passengers","tier"].forEach(id=>["input","change"].forEach(eventName=>$("#"+id).addEventListener(eventName,()=>scheduleAutoFare())));
+        $("#continue").addEventListener("click",startPayment);
+        $("#reviewNext").addEventListener("click",()=>setStep(2));
+        $("#payBack").addEventListener("click",()=>setStep(1));
+        $("#paymentMethods").addEventListener("click",event=>{const button=event.target.closest("[data-payment]");if(button)setMethod(button.dataset.payment);});
+        $("#cardNumber").addEventListener("input",event=>{const value=digits(event.target.value).slice(0,16);event.target.value=value.match(/.{1,4}/g)?value.match(/.{1,4}/g).join(" "):"";$("#cardType").textContent=cardBrand(value);});
+        $("#expiry").addEventListener("input",event=>{const value=digits(event.target.value).slice(0,4);event.target.value=value.length>2?value.slice(0,2)+"/"+value.slice(2):value;});
+        $("#payNow").addEventListener("click",pay);
+        $("#print").addEventListener("click",()=>{if(state.confirmed)window.print();});
+        $("#viewBookings").addEventListener("click",()=>{close("paymentModal",false);renderHistory();open("historyModal");});
+        $("#history").addEventListener("click",event=>{const button=event.target.closest("[data-cancel]");if(button)askCancel(button.dataset.cancel);});
+        $("#confirmCancel").addEventListener("click",cancelBooking);
+        $$(".tab").forEach(button=>button.addEventListener("click",()=>authMode(button.dataset.auth)));
+        $("#authForm").addEventListener("submit",submitAuth);
+        $$("[data-close]").forEach(button=>button.addEventListener("click",()=>close(button.dataset.close)));
+        $$(".modal").forEach(modal=>modal.addEventListener("mousedown",event=>{if(event.target===modal)close(modal.id);}));
+        $("#suggestionList").addEventListener("click",event=>{const button=event.target.closest("[data-suggest]");if(!button)return;$("#transport").value=button.dataset.suggest;refreshTransport(false);$("#booking").scrollIntoView({behavior:"smooth",block:"start"});});
+        document.addEventListener("keydown",trap);
+
+        /* ── Attach custom dropdowns to both station inputs ── */
+        setupDropdown("source");
+        setupDropdown("destination");
       };
-      /** Restore persistent non-sensitive data and initialize the standalone page. */
+
       const hydrateDatabase = async () => {
         try {
           await database.ready();
@@ -738,22 +848,22 @@
           if(session===undefined)await database.write(KEYS.session,state.session);else if(session&&session.name&&session.email)state.session=session;
           if(theme===undefined)await database.write(KEYS.theme,state.theme);else setTheme(theme);
           renderSession();renderBookingBadge();
-        } catch(error) {
-          // The localStorage fallback remains active when IndexedDB is blocked.
-        }
+        } catch(error){}
       };
       const hydrateBackend = async () => {
-        try {
-          const result=await backend.listBookings();
-          if(Array.isArray(result.bookings)){state.bookings=result.bookings.filter(item=>item&&item.id&&item.pnr);saveJSON(KEYS.bookings,state.bookings);renderBookingBadge();}
-        } catch(error) {
-          // The local database remains available when the Node server is offline.
-        }
+        try { const result=await backend.listBookings();if(Array.isArray(result.bookings)){state.bookings=result.bookings.filter(item=>item&&item.id&&item.pnr);saveJSON(KEYS.bookings,state.bookings);renderBookingBadge();} } catch(error){}
       };
       const init = () => {
         let savedTheme=null;try{savedTheme=localStorage.getItem(KEYS.theme);}catch(error){}
-        const savedBookings=loadJSON(KEYS.bookings,[]), savedSession=loadJSON(KEYS.session,null);state.bookings=Array.isArray(savedBookings)?savedBookings.filter(item=>item&&item.id&&item.pnr):[];state.session=savedSession&&savedSession.name&&savedSession.email?savedSession:null;
-        $("#date").min=today();$("#date").value=today();setTheme(savedTheme==="dark"?"dark":"light");$("#transport").value="local";refreshTransport(false);renderSession();renderBookingBadge();suggestions();bind();setupNavigation();hydrateDatabase();hydrateBackend();
+        const savedBookings=loadJSON(KEYS.bookings,[]),savedSession=loadJSON(KEYS.session,null);
+        state.bookings=Array.isArray(savedBookings)?savedBookings.filter(item=>item&&item.id&&item.pnr):[];
+        state.session=savedSession&&savedSession.name&&savedSession.email?savedSession:null;
+        $("#date").min=today();$("#date").value=today();
+        setTheme(savedTheme==="dark"?"dark":"light");
+        $("#transport").value="local";
+        refreshTransport(false);
+        renderSession();renderBookingBadge();suggestions();bind();setupNavigation();
+        hydrateDatabase();hydrateBackend();
       };
       init();
     })();
